@@ -30,6 +30,7 @@ func newInstanceTest() {
 	myEntity := &Entity{
 		ID: "1",
 	}
+	fmt.Println(airshipInstanceBitcoinPay.IsEligible(myEntity))
 	fmt.Println(airshipInstanceBitcoinPay.IsEnabled(myEntity))
 
 	fmt.Println(airshipInstanceBitcoinPay.GetTreatment(myEntity))
