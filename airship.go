@@ -11,12 +11,14 @@ import (
 
 var defaultTimeout = 10 * time.Second
 
+// Client is an object that has all the data to "configure" the Airship Go SDK
 type Client struct {
 	EnvKey         string
 	EdgeURL        string
 	RequestTimeout time.Duration
 }
 
+// AirshipFlag is an object that represents a flag in the SDK.
 type AirshipFlag struct {
 	Name   string
 	Client *Client
@@ -36,15 +38,19 @@ type ObjectValues struct {
 
 var DefaultClient = &Client{}
 
-// NOTE: this is not thread safe.
+// Configure sets up a Airship Go SDK singleton for the airship package.
+// Once Configure is called, one may call methods directly on the package.
+// E.g., airship.Flag("flag-name")
 func Configure(c *Client) {
 	DefaultClient = c
 }
 
+// Flag returns an AirshipFlag object that represents the flag.
 func Flag(flagName string) *AirshipFlag {
 	return DefaultClient.Flag(flagName)
 }
 
+// Flag (a method on an instance of the SDK) returns an AirshipFlag object that represents the flag.
 func (c *Client) Flag(flagName string) *AirshipFlag {
 	return &AirshipFlag{
 		Name:   flagName,
@@ -52,6 +58,7 @@ func (c *Client) Flag(flagName string) *AirshipFlag {
 	}
 }
 
+// GetTreatment returns the treatment value or codename for the flag for a particular entity.
 func (f *AirshipFlag) GetTreatment(entity interface{}) string {
 	return getTreatment(f, f.Client, entity)
 }
@@ -64,7 +71,8 @@ func getTreatment(flag *AirshipFlag, client *Client, entity interface{}) string 
 	return objectValues.Treatment
 }
 
-// Pass a pointer as the second argument with the same semantics as json.Unmarshal
+// GetPayload unmarshals the JSON payload value associated with the flag for a particular entity.
+// Pass a pointer as the second argument just as you would to json.Unmarshal.
 func (f *AirshipFlag) GetPayload(entity interface{}, v interface{}) error {
 	return getPayload(f, f.Client, entity, v)
 }
@@ -77,6 +85,7 @@ func getPayload(flag *AirshipFlag, client *Client, entity interface{}, v interfa
 	return json.Unmarshal(objectValues.Payload, v)
 }
 
+// IsEligible returns whether or not an entity is part of a population (sampled or yet to be sampled) associated with the flag.
 func (f *AirshipFlag) IsEligible(entity interface{}) bool {
 	return isEligible(f, f.Client, entity)
 }
@@ -89,6 +98,7 @@ func isEligible(flag *AirshipFlag, client *Client, entity interface{}) bool {
 	return objectValues.IsEligible
 }
 
+// IsEnabled returns whether or not an entity is sampled inside a population and given a non-off treatment.
 func (f *AirshipFlag) IsEnabled(entity interface{}) bool {
 	return isEnabled(f, f.Client, entity)
 }
