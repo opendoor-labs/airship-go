@@ -29,7 +29,7 @@ type ObjectValuesBody struct {
 	Entity interface{} `json:"entity"`
 }
 
-type ObjectValues struct {
+type objectValuesContainer struct {
 	Treatment  string          `json:"treatment"`
 	Payload    json.RawMessage `json:"payload"`
 	IsEligible bool            `json:"isEligible"`
@@ -111,7 +111,7 @@ func isEnabled(flag *AirshipFlag, client *Client, entity interface{}) bool {
 	return objectValues.IsEnabled
 }
 
-func getObjectValues(flag *AirshipFlag, client *Client, entity interface{}) (*ObjectValues, error) {
+func getObjectValues(flag *AirshipFlag, client *Client, entity interface{}) (*objectValuesContainer, error) {
 	objJson, _ := json.Marshal(&ObjectValuesBody{
 		Flag:   flag.Name,
 		Entity: entity,
@@ -131,7 +131,7 @@ func getObjectValues(flag *AirshipFlag, client *Client, entity interface{}) (*Ob
 	if err != nil {
 		return nil, err
 	}
-	var objectValues ObjectValues
+	var objectValues objectValuesContainer
 	json.Unmarshal(body, &objectValues)
 	return &objectValues, nil
 }
