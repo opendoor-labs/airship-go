@@ -18,8 +18,8 @@ type Client struct {
 	RequestTimeout time.Duration
 }
 
-// AirshipFlag is an object that represents a flag in the SDK.
-type AirshipFlag struct {
+// FeatureFlag is an object that represents a flag in the SDK.
+type FeatureFlag struct {
 	Name   string
 	Client *Client
 }
@@ -45,25 +45,25 @@ func Configure(c *Client) {
 	defaultClient = c
 }
 
-// Flag returns an AirshipFlag object that represents the flag.
-func Flag(flagName string) *AirshipFlag {
+// Flag returns an FeatureFlag object that represents the flag.
+func Flag(flagName string) *FeatureFlag {
 	return defaultClient.Flag(flagName)
 }
 
-// Flag (a method on an instance of the SDK) returns an AirshipFlag object that represents the flag.
-func (c *Client) Flag(flagName string) *AirshipFlag {
-	return &AirshipFlag{
+// Flag (a method on an instance of the SDK) returns an FeatureFlag object that represents the flag.
+func (c *Client) Flag(flagName string) *FeatureFlag {
+	return &FeatureFlag{
 		Name:   flagName,
 		Client: c,
 	}
 }
 
 // GetTreatment returns the treatment value or codename for the flag for a particular entity.
-func (f *AirshipFlag) GetTreatment(entity interface{}) string {
+func (f *FeatureFlag) GetTreatment(entity interface{}) string {
 	return getTreatment(f, f.Client, entity)
 }
 
-func getTreatment(flag *AirshipFlag, client *Client, entity interface{}) string {
+func getTreatment(flag *FeatureFlag, client *Client, entity interface{}) string {
 	objectValues, err := getObjectValues(flag, client, entity)
 	if err != nil {
 		return ""
@@ -73,11 +73,11 @@ func getTreatment(flag *AirshipFlag, client *Client, entity interface{}) string 
 
 // GetPayload unmarshals the JSON payload value associated with the flag for a particular entity.
 // Pass a pointer as the second argument just as you would to json.Unmarshal.
-func (f *AirshipFlag) GetPayload(entity interface{}, v interface{}) error {
+func (f *FeatureFlag) GetPayload(entity interface{}, v interface{}) error {
 	return getPayload(f, f.Client, entity, v)
 }
 
-func getPayload(flag *AirshipFlag, client *Client, entity interface{}, v interface{}) error {
+func getPayload(flag *FeatureFlag, client *Client, entity interface{}, v interface{}) error {
 	objectValues, err := getObjectValues(flag, client, entity)
 	if err != nil {
 		return err
@@ -86,11 +86,11 @@ func getPayload(flag *AirshipFlag, client *Client, entity interface{}, v interfa
 }
 
 // IsEligible returns whether or not an entity is part of a population (sampled or yet to be sampled) associated with the flag.
-func (f *AirshipFlag) IsEligible(entity interface{}) bool {
+func (f *FeatureFlag) IsEligible(entity interface{}) bool {
 	return isEligible(f, f.Client, entity)
 }
 
-func isEligible(flag *AirshipFlag, client *Client, entity interface{}) bool {
+func isEligible(flag *FeatureFlag, client *Client, entity interface{}) bool {
 	objectValues, err := getObjectValues(flag, client, entity)
 	if err != nil {
 		return false
@@ -99,11 +99,11 @@ func isEligible(flag *AirshipFlag, client *Client, entity interface{}) bool {
 }
 
 // IsEnabled returns whether or not an entity is sampled inside a population and given a non-off treatment.
-func (f *AirshipFlag) IsEnabled(entity interface{}) bool {
+func (f *FeatureFlag) IsEnabled(entity interface{}) bool {
 	return isEnabled(f, f.Client, entity)
 }
 
-func isEnabled(flag *AirshipFlag, client *Client, entity interface{}) bool {
+func isEnabled(flag *FeatureFlag, client *Client, entity interface{}) bool {
 	objectValues, err := getObjectValues(flag, client, entity)
 	if err != nil {
 		return false
@@ -111,7 +111,7 @@ func isEnabled(flag *AirshipFlag, client *Client, entity interface{}) bool {
 	return objectValues.IsEnabled
 }
 
-func getObjectValues(flag *AirshipFlag, client *Client, entity interface{}) (*objectValuesContainer, error) {
+func getObjectValues(flag *FeatureFlag, client *Client, entity interface{}) (*objectValuesContainer, error) {
 	requstObj, _ := json.Marshal(&requestDataWrapper{
 		Flag:   flag.Name,
 		Entity: entity,
