@@ -52,18 +52,6 @@ func (c *Client) Flag(flagName string) *AirshipFlag {
 	}
 }
 
-func (f *AirshipFlag) IsEnabled(entity interface{}) bool {
-	return isEnabled(f, f.Client, entity)
-}
-
-func isEnabled(flag *AirshipFlag, client *Client, entity interface{}) bool {
-	objectValues, err := getObjectValues(flag, client, entity)
-	if err != nil {
-		return false
-	}
-	return objectValues.IsEnabled
-}
-
 func (f *AirshipFlag) GetTreatment(entity interface{}) string {
 	return getTreatment(f, f.Client, entity)
 }
@@ -87,6 +75,30 @@ func getPayload(flag *AirshipFlag, client *Client, entity interface{}, v interfa
 		return err
 	}
 	return json.Unmarshal(objectValues.Payload, v)
+}
+
+func (f *AirshipFlag) IsEligible(entity interface{}) bool {
+	return isEligible(f, f.Client, entity)
+}
+
+func isEligible(flag *AirshipFlag, client *Client, entity interface{}) bool {
+	objectValues, err := getObjectValues(flag, client, entity)
+	if err != nil {
+		return false
+	}
+	return objectValues.IsEligible
+}
+
+func (f *AirshipFlag) IsEnabled(entity interface{}) bool {
+	return isEnabled(f, f.Client, entity)
+}
+
+func isEnabled(flag *AirshipFlag, client *Client, entity interface{}) bool {
+	objectValues, err := getObjectValues(flag, client, entity)
+	if err != nil {
+		return false
+	}
+	return objectValues.IsEnabled
 }
 
 func getObjectValues(flag *AirshipFlag, client *Client, entity interface{}) (*ObjectValues, error) {
