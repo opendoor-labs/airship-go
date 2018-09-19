@@ -24,7 +24,7 @@ func main() {
 func newInstanceTest() {
 	airshipInstance := &airship.Client{
 		EnvKey:  os.Getenv("ENV_KEY"),
-		EdgeURL: "localhost:5000",
+		EdgeURL: "http://localhost:5000",
 	}
 	airshipInstanceBitcoinPay := airshipInstance.Flag("bitcoin-pay")
 	myEntity := &Entity{
@@ -46,7 +46,7 @@ func newInstanceTest() {
 func singletonTest() {
 	airship.Configure(&airship.Client{
 		EnvKey:  os.Getenv("ENV_KEY"),
-		EdgeURL: "localhost:5000",
+		EdgeURL: "http://localhost:5000",
 	})
 	airshipBitcoinPay := airship.Flag("bitcoin-pay")
 	myEntity := &Entity{

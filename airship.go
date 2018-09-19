@@ -24,7 +24,7 @@ type AirshipFlag struct {
 	Client *Client
 }
 
-type ObjectValuesBody struct {
+type requestDataWrapper struct {
 	Flag   string      `json:"flag"`
 	Entity interface{} `json:"entity"`
 }
@@ -36,18 +36,18 @@ type objectValuesContainer struct {
 	IsEnabled  bool            `json:"isEnabled"`
 }
 
-var DefaultClient = &Client{}
+var defaultClient = &Client{}
 
 // Configure sets up a Airship Go SDK singleton for the airship package.
 // Once Configure is called, one may call methods directly on the package.
 // E.g., airship.Flag("flag-name")
 func Configure(c *Client) {
-	DefaultClient = c
+	defaultClient = c
 }
 
 // Flag returns an AirshipFlag object that represents the flag.
 func Flag(flagName string) *AirshipFlag {
-	return DefaultClient.Flag(flagName)
+	return defaultClient.Flag(flagName)
 }
 
 // Flag (a method on an instance of the SDK) returns an AirshipFlag object that represents the flag.
@@ -112,7 +112,7 @@ func isEnabled(flag *AirshipFlag, client *Client, entity interface{}) bool {
 }
 
 func getObjectValues(flag *AirshipFlag, client *Client, entity interface{}) (*objectValuesContainer, error) {
-	objJson, _ := json.Marshal(&ObjectValuesBody{
+	requstObj, _ := json.Marshal(&requestDataWrapper{
 		Flag:   flag.Name,
 		Entity: entity,
 	})
@@ -123,7 +123,7 @@ func getObjectValues(flag *AirshipFlag, client *Client, entity interface{}) (*ob
 	var netClient = &http.Client{
 		Timeout: client.RequestTimeout,
 	}
-	res, err := netClient.Post("http://"+client.EdgeURL+"/v2/object-values/"+client.EnvKey, "application/json", bytes.NewBuffer(objJson))
+	res, err := netClient.Post(client.EdgeURL+"/v2/object-values/"+client.EnvKey, "application/json", bytes.NewBuffer(requstObj))
 	if err != nil {
 		return nil, err
 	}
