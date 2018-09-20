@@ -13,23 +13,23 @@ go get https://github.com/airshiphq/airship-go
 ## Usage
 ```
 import (
-    "fmt"
-    airship "github.com/username/library"
+	"fmt"
+	airship "github.com/username/library"
 )
 
 type Entity struct {
-    ID string `json:"id"`
+	ID string `json:"id"`
 }
 
 airship.Configure(&airship.Client{
-    EnvKey:  "envKey",
-    EdgeURL: "http://localhost:5000",
+	EnvKey:  "envKey",
+	EdgeURL: "http://localhost:5000",
 })
 
 airshipBitcoinPay := airship.Flag("bitcoin-pay")
 
 myEntity := &Entity{
-    ID: "2",
+	ID: "2",
 }
 
 fmt.Println(airshipBitcoinPay.IsEnabled(myEntity))
