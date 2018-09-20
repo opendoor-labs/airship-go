@@ -66,7 +66,7 @@ func (f *FeatureFlag) GetTreatment(entity interface{}) string {
 func getTreatment(flag *FeatureFlag, client *Client, entity interface{}) string {
 	objectValues, err := getObjectValues(flag, client, entity)
 	if err != nil {
-		return ""
+		return "off"
 	}
 	return objectValues.Treatment
 }
