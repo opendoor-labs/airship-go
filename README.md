@@ -38,7 +38,7 @@ airship.Configure(&airship.Client{
 
 ```
 
-Here, `envKey` is the environment key you can from the [**Airship UI**](https://app.airshiphq.com), and the `EdgeURL` points to your [**Airship Microservice**](https://github.com/airshiphq/airship-microservice) URL.
+Here, `envKey` is the environment key you can get from the [**Airship UI**](https://app.airshiphq.com), and the `EdgeURL` points to your [**Airship Microservice**](https://github.com/airshiphq/airship-microservice) URL.
 
 ## 04 Usage
 ```
