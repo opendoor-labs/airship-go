@@ -60,4 +60,5 @@ myUser := &User{
 }
 
 fmt.Println(airshipBitcoinPay.IsEnabled(myUser))
+fmt.Println(airshipBitcoinPay.IsEligible(myUser))
 ```
