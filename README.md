@@ -18,9 +18,7 @@ go get https://github.com/airshiphq/airship-go
 
 ## 02 Key Concepts
 
-```
-go get https://github.com/airshiphq/airship-go
-```
+In Airship, feature **flags** control traffic to generic objects (called **entities**). The most common type for entities is `User`, but they can also be other things (i.e. `Page`, `Group`, `Team`, `App`, etc.). By default, all entities have the type `User`.
 
 ## 03 Configuring Flags
 
