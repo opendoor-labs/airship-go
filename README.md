@@ -24,8 +24,19 @@ In Go, we define different entity types using `struct`s. (e.g., the `User` struc
 
 ## 03 Configuring Flags
 
+To configure Airship, we would need to pass a new Client instance.
+
 ```
-go get https://github.com/airshiphq/airship-go
+import (
+	"fmt"
+	airship "github.com/username/library"
+)
+
+airship.Configure(&airship.Client{
+	EnvKey:  "envKey",
+	EdgeURL: "http://localhost:5000",
+})
+
 ```
 
 ## 04 Usage
@@ -35,14 +46,11 @@ import (
 	airship "github.com/username/library"
 )
 
+// Do configuration (section 03)
+
 type User struct {
 	ID string `json:"id"`
 }
-
-airship.Configure(&airship.Client{
-	EnvKey:  "envKey",
-	EdgeURL: "http://localhost:5000",
-})
 
 airshipBitcoinPay := airship.Flag("bitcoin-pay")
 
