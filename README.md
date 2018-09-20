@@ -17,7 +17,7 @@ import (
 	airship "github.com/username/library"
 )
 
-type Entity struct {
+type User struct {
 	ID string `json:"id"`
 }
 
@@ -28,9 +28,9 @@ airship.Configure(&airship.Client{
 
 airshipBitcoinPay := airship.Flag("bitcoin-pay")
 
-myEntity := &Entity{
+myUser := &User{
 	ID: "2",
 }
 
-fmt.Println(airshipBitcoinPay.IsEnabled(myEntity))
+fmt.Println(airshipBitcoinPay.IsEnabled(myUser))
 ```
