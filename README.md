@@ -62,3 +62,45 @@ myUser := &User{
 fmt.Println(airshipBitcoinPay.IsEnabled(myUser))
 fmt.Println(airshipBitcoinPay.IsEligible(myUser))
 ```
+
+`IsEnabled` returns whether or not a user or entity has access to the feature. It'll return `false` if the flag is not registered with Airship UI.
+
+`IsEligible` returns whether or not a user could be sampled now or in the future within a population associated with the feature flag. It'll return `false` if the flag is not registered with Airship UI.
+
+
+```
+import (
+    "fmt"
+    airship "github.com/username/library"
+)
+
+// Do configuration (section 03)
+
+type User struct {
+    ID string `json:"id"`
+}
+
+// This is our example app's expected payload
+type Payload struct {
+    Foo string `json:"foo"`
+}
+
+airshipBitcoinPay := airship.Flag("bitcoin-pay")
+
+myUser := &User{
+    ID: "2",
+}
+
+fmt.Println(airshipBitcoinPay.GetTreatment(myUser))
+
+var myPayload Payload
+err := airshipInstanceBitcoinPay.GetPayload(myUser, &myPayload)
+if err != nil {
+    fmt.Println(err)
+}
+fmt.Println(myPayload.Foo)
+```
+
+`GetTreatmnt` returns the treatment codename that is given to the user or entity. It'll return `""` if the flag is not registered with Airship UI.
+
+`GetPayload` returns the JSON payload associated with the treatment for a flag to the user or entity. The way to get the payload is to define a `struct` and to unmarshal the JSON to that struct. It'll return `nil` if the flag is not registered with Airship UI.
