@@ -28,7 +28,6 @@ To configure Airship, we would need to pass a new Client instance.
 
 ```
 import (
-	"fmt"
 	airship "github.com/username/library"
 )
 
@@ -38,6 +37,8 @@ airship.Configure(&airship.Client{
 })
 
 ```
+
+Here, `envKey` is the environment key you can from the [**Airship UI**](https://app.airshiphq.com).
 
 ## 04 Usage
 ```
