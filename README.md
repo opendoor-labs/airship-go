@@ -70,25 +70,25 @@ fmt.Println(airshipBitcoinPay.IsEligible(myUser))
 
 ```
 import (
-    "fmt"
-    airship "github.com/username/library"
+	"fmt"
+	airship "github.com/username/library"
 )
 
 // Do configuration (section 03)
 
 type User struct {
-    ID string `json:"id"`
+	ID string `json:"id"`
 }
 
 // This is our example app's expected payload
 type Payload struct {
-    Foo string `json:"foo"`
+	Foo string `json:"foo"`
 }
 
 airshipBitcoinPay := airship.Flag("bitcoin-pay")
 
 myUser := &User{
-    ID: "2",
+	ID: "2",
 }
 
 fmt.Println(airshipBitcoinPay.GetTreatment(myUser))
@@ -96,7 +96,7 @@ fmt.Println(airshipBitcoinPay.GetTreatment(myUser))
 var myPayload Payload
 err := airshipInstanceBitcoinPay.GetPayload(myUser, &myPayload)
 if err != nil {
-    fmt.Println(err)
+	fmt.Println(err)
 }
 fmt.Println(myPayload.Foo)
 ```
