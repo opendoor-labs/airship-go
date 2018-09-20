@@ -101,6 +101,6 @@ if err != nil {
 fmt.Println(myPayload.Foo)
 ```
 
-`GetTreatment` returns the treatment codename that is given to the user or entity. It'll return `""` if the flag is not registered with Airship UI.
+`GetTreatment` returns the treatment codename that is given to the user or entity. It'll return `"off"` if the flag is not registered with Airship UI.
 
 `GetPayload` returns the JSON payload associated with the treatment for a flag to the user or entity. The way to get the payload is to define a `struct` and to unmarshal the JSON to that struct. It'll return `nil` if the flag is not registered with Airship UI.
