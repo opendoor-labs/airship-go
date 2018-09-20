@@ -80,7 +80,7 @@ type User struct {
 	ID string `json:"id"`
 }
 
-// This is our example app's expected payload
+// This is an example expected payload
 type Payload struct {
 	Foo string `json:"foo"`
 }
