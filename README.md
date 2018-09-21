@@ -31,14 +31,10 @@ import (
 	airship "github.com/username/library"
 )
 
-airship.Configure(&airship.Client{
-	EnvKey:  "envKey",
-	EdgeURL: "http://localhost:5000",
-})
-
+airship.Configure(airship.New(envKey, edgeURL))
 ```
 
-Here, `envKey` is the environment key you can get from the [**Airship UI**](https://app.airshiphq.com), and the `EdgeURL` points to your [**Airship Microservice**](https://github.com/airshiphq/airship-microservice) URL.
+Here, `envKey` is the environment key you can get from the [**Airship UI**](https://app.airshiphq.com), and the `edgeURL` points to your [**Airship Microservice**](https://github.com/airshiphq/airship-microservice) URL.
 
 ## 04 Usage
 ```
