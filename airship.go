@@ -10,6 +10,11 @@ import (
 )
 
 const (
+	// TreatmentOff indicates that an entity is not part of a treatment.
+	TreatmentOff = "off"
+	// TreatmentOn indicates that an entity is part of a treatment.
+	TreatmentOn = "on"
+
 	defaultTimeout = 10 * time.Second
 )
 
@@ -88,7 +93,7 @@ func (c *Client) Flag(flagName string) *FeatureFlag {
 func (f *FeatureFlag) GetTreatment(entity interface{}) (string, error) {
 	treatment, err := getTreatment(f, f.Client, entity)
 	if err != nil {
-		return "", fmt.Errorf("airship: %v", err)
+		return TreatmentOff, fmt.Errorf("airship: %v", err)
 	}
 	return treatment, nil
 }
@@ -96,7 +101,7 @@ func (f *FeatureFlag) GetTreatment(entity interface{}) (string, error) {
 func getTreatment(flag *FeatureFlag, client *Client, entity interface{}) (string, error) {
 	objectValues, err := getObjectValues(flag, client, entity)
 	if err != nil {
-		return "", err
+		return TreatmentOff, err
 	}
 	return objectValues.Treatment, nil
 }
