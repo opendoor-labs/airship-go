@@ -49,6 +49,13 @@ type clientParams struct {
 	client *http.Client
 }
 
+// WithHTTPClient sets the *http.Client used by the returned Client.
+func WithHTTPClient(c *http.Client) ClientOption {
+	return func(p *clientParams) {
+		p.client = c
+	}
+}
+
 var defaultClient = &Client{}
 
 // Configure sets up a Airship Go SDK singleton for the airship package.
