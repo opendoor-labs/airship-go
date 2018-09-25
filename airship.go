@@ -186,6 +186,9 @@ func getObjectValues(flag *FeatureFlag, client *Client, entity interface{}) (*ob
 	}
 
 	var objectValues objectValuesContainer
-	json.Unmarshal(body, &objectValues)
+	if err := json.Unmarshal(body, &objectValues); err != nil {
+		return nil, err
+	}
+
 	return &objectValues, nil
 }
