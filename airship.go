@@ -174,13 +174,17 @@ func getObjectValues(flag *FeatureFlag, client *Client, entity interface{}) (*ob
 		return nil, err
 	}
 
-	res, err := client.client.Post(client.url, "application/json", bytes.NewBuffer(requestObj))
+	resp, err := client.client.Post(client.url, "application/json", bytes.NewBuffer(requestObj))
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(res.Body)
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("unexpected response status: %s", resp.Status)
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
