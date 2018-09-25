@@ -12,8 +12,6 @@ import (
 const (
 	// TreatmentOff indicates that an entity is not part of a treatment.
 	TreatmentOff = "off"
-	// TreatmentOn indicates that an entity is part of a treatment.
-	TreatmentOn = "on"
 
 	defaultTimeout = 10 * time.Second
 )
